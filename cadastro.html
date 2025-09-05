@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Título do site (aparece na aba do navegador e no Google) -->
+  <title>Aurio Anime - Assista Animes Online Grátis</title>
+
+  <!-- Descrição (importante para SEO e Google) -->
+  <meta name="description" content="Aurio Anime é o melhor portal para assistir animes online grátis. Explore os títulos mais populares como Naruto, One Piece, Dragon Ball, Demon Slayer e muito mais.">
+
+  <!-- Palavras-chave (SEO) -->
+  <meta name="keywords" content="anime, assistir anime online, animes dublados, animes legendados, Naruto, One Piece, Dragon Ball, Demon Slayer, Jujutsu Kaisen, Attack on Titan">
+
+  <!-- Autor -->
+  <meta name="author" content="Esmael da Silva Jonas">
+
+  <!-- Open Graph (Facebook, WhatsApp e redes sociais) -->
+  <meta property="og:title" content="Aurio Anime - Assista Animes Online">
+  <meta property="og:description" content="Assista seus animes favoritos online com qualidade. Naruto, One Piece, Dragon Ball e muito mais.">
+  <meta property="og:image" content="https://seusite.com/img/capa.jpg"> <!-- imagem de pré-visualização -->
+  <meta property="og:url" content="https://seusite.com">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Aurio Anime - Assista Animes Online">
+  <meta name="twitter:description" content="O melhor site para assistir animes grátis, onde e quando quiser.">
+  <meta name="twitter:image" content="https://seusite.com/img/capa.jpg">
+
+  <!-- Favicon (ícone do site na aba do navegador) -->
+  <link rel="icon" href="img/ChatGPT Image 25_08_2025, 17_39_01 (2).png" type="image/png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .btn-crimson { background:#DC143C; color:#fff; transition:.3s; }
+    .btn-crimson:hover { background:#b01030; }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-6">
+    <h2 class="text-2xl font-bold mb-4 text-[#DC143C]">Cadastro</h2>
+
+    <form id="cadastroForm" class="flex flex-col gap-3">
+      <input id="nome" required placeholder="Nome" class="border p-2 rounded">
+      <input id="sobrenome" required placeholder="Sobrenome" class="border p-2 rounded">
+      <input id="email" type="email" required placeholder="E-mail" class="border p-2 rounded">
+      <input id="idade" type="number" min="1" required placeholder="Idade" class="border p-2 rounded">
+      <input id="passe" type="password" required placeholder="Senha" class="border p-2 rounded">
+      <input id="nascimento" type="date" required class="border p-2 rounded">
+
+      <select id="pais" required class="border p-2 rounded">
+        <option value="" disabled selected>Escolha seu país</option>
+        <option>Brasil</option><option>Portugal</option><option>Angola</option>
+        <option>Moçambique</option><option>Cabo Verde</option><option>Guiné-Bissau</option>
+        <option>Outro</option>
+      </select>
+
+      <label class="text-sm text-gray-600">Foto (opcional)</label>
+      <input id="foto" type="file" accept="image/*" class="border p-2 rounded">
+
+      <button class="btn-crimson rounded-lg px-4 py-2">Cadastrar</button>
+    </form>
+
+    <p class="text-sm text-gray-500 mt-4">
+      Já tem conta?
+      <a class="text-[#DC143C] font-semibold" href="Login.html">Entrar</a>
+    </p>
+  </div>
+
+<script>
+  // Pega todos os inputs
+  const nomeEl = document.getElementById('nome');
+  const sobrenomeEl = document.getElementById('sobrenome');
+  const emailEl = document.getElementById('email');
+  const idadeEl = document.getElementById('idade');
+  const passeEl = document.getElementById('passe');
+  const nascEl = document.getElementById('nascimento');
+  const paisEl = document.getElementById('pais');
+  const fotoEl = document.getElementById('foto');
+
+  document.getElementById('cadastroForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const nome = nomeEl.value.trim();
+    const sobrenome = sobrenomeEl.value.trim();
+    const email = emailEl.value.trim().toLowerCase();
+    const idade = parseInt(idadeEl.value, 10);
+    const passe = passeEl.value;
+    const nascimento = nascEl.value;
+    const pais = paisEl.value;
+
+    let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+
+    // verifica se o email já existe
+    if (usuarios.some(u => u.email === email)) {
+      alert('Este e-mail já está cadastrado.');
+      return;
+    }
+
+    // cria id único
+    const id = 'u_' + Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+    const isFirstUserAdmin = usuarios.length === 0; // só o primeiro cadastrado é admin
+
+    const salvarUsuario = (foto) => {
+      const usuario = { 
+        id, nome, sobrenome, email, idade, passe, nascimento, pais, 
+        foto, isAdmin: isFirstUserAdmin, seguidores: [] 
+      };
+      usuarios.push(usuario);
+      localStorage.setItem('usuarios', JSON.stringify(usuarios));
+      localStorage.setItem('usuarioAtual', id); // mantém logado
+      alert('✅ Cadastro realizado com sucesso!');
+      window.location.href = 'perfil.html'; // vai direto ao perfil
+    };
+
+    // se tiver foto, salva como base64
+    if (fotoEl.files.length > 0) {
+      const reader = new FileReader();
+      reader.onload = (ev) => salvarUsuario(ev.target.result);
+      reader.readAsDataURL(fotoEl.files[0]);
+    } else {
+      salvarUsuario(null);
+    }
+  });
+</script>
+</body>
+</html>

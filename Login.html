@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Título do site (aparece na aba do navegador e no Google) -->
+  <title>login</title>
+
+  <!-- Descrição (importante para SEO e Google) -->
+  <meta name="description" content="Aurio Anime é o melhor portal para assistir animes online grátis. Explore os títulos mais populares como Naruto, One Piece, Dragon Ball, Demon Slayer e muito mais.">
+
+  <!-- Palavras-chave (SEO) -->
+  <meta name="keywords" content="anime, assistir anime online, animes dublados, animes legendados, Naruto, One Piece, Dragon Ball, Demon Slayer, Jujutsu Kaisen, Attack on Titan">
+
+  <!-- Autor -->
+  <meta name="author" content="Esmael da Silva Jonas">
+
+  <!-- Open Graph (Facebook, WhatsApp e redes sociais) -->
+  <meta property="og:title" content="Aurio Anime - Assista Animes Online">
+  <meta property="og:description" content="Assista seus animes favoritos online com qualidade. Naruto, One Piece, Dragon Ball e muito mais.">
+  <meta property="og:image" content="https://seusite.com/img/capa.jpg"> <!-- imagem de pré-visualização -->
+  <meta property="og:url" content="https://seusite.com">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Aurio Anime - Assista Animes Online">
+  <meta name="twitter:description" content="O melhor site para assistir animes grátis, onde e quando quiser.">
+  <meta name="twitter:image" content="https://seusite.com/img/capa.jpg">
+
+  <!-- Favicon (ícone do site na aba do navegador) -->
+  <link rel="icon" href="img/ChatGPT Image 25_08_2025, 17_39_01 (2).png" type="image/png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .btn-crimson { background:#DC143C; color:#fff; transition:.3s; }
+    .btn-crimson:hover { background:#b01030; }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-6 text-center">
+
+    <!-- Logo -->
+    <div class="mb-4">
+      <img src="img/ChatGPT Image 25_08_2025, 17_39_01.png" alt="Aurio Anime" class="mx-auto w-20 h-20 object-contain">
+    </div>
+
+    <h2 class="text-2xl font-bold mb-4 text-[#DC143C]">Login</h2>
+
+    <form id="loginForm" class="flex flex-col gap-3">
+      <input id="email" type="email" required placeholder="E-mail" class="border p-2 rounded">
+      <input id="passe" type="password" required placeholder="Senha" class="border p-2 rounded">
+      <button class="btn-crimson rounded-lg px-4 py-2">Entrar</button>
+    </form>
+
+    <p class="text-sm text-gray-500 mt-4">
+      Não tem conta?
+      <a class="text-[#DC143C] font-semibold" href="Cadastro.html">Cadastrar</a>
+    </p>
+
+    <!-- Botão de voltar -->
+    <div class="mt-4">
+      <a href="index.html" class="btn-crimson rounded-lg px-4 py-2 inline-block">Voltar</a>
+    </div>
+
+  </div>
+
+<script>
+  // cria usuário padrão se ainda não existir
+  const usuarioPadrao = {
+    id: 1,
+    email: "admin@teste.com",
+    passe: "123456"
+  };
+
+  let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+  // só adiciona o padrão se não existir
+  if (!usuarios.find(x => x.email === usuarioPadrao.email)) {
+    usuarios.push(usuarioPadrao);
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+  }
+
+  // valida login
+  const form = document.getElementById('loginForm');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim().toLowerCase();
+    const passe = document.getElementById('passe').value;
+    const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+
+    const u = usuarios.find(x => x.email === email && x.passe === passe);
+    if (!u) {
+      alert('E-mail ou senha inválidos.');
+      return;
+    }
+    localStorage.setItem('usuarioAtual', u.id); // mantém logado
+    window.location.href = 'Perfil.html';
+  });
+</script>
+
+</body>
+</html>

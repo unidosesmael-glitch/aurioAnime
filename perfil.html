@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Título do site (aparece na aba do navegador e no Google) -->
+  <title>Aurio Anime - Assista Animes Online Grátis</title>
+
+  <!-- Descrição (importante para SEO e Google) -->
+  <meta name="description" content="Aurio Anime é o melhor portal para assistir animes online grátis. Explore os títulos mais populares como Naruto, One Piece, Dragon Ball, Demon Slayer e muito mais.">
+
+  <!-- Palavras-chave (SEO) -->
+  <meta name="keywords" content="anime, assistir anime online, animes dublados, animes legendados, Naruto, One Piece, Dragon Ball, Demon Slayer, Jujutsu Kaisen, Attack on Titan">
+
+  <!-- Autor -->
+  <meta name="author" content="Esmael da Silva Jonas">
+
+  <!-- Open Graph (Facebook, WhatsApp e redes sociais) -->
+  <meta property="og:title" content="Aurio Anime - Assista Animes Online">
+  <meta property="og:description" content="Assista seus animes favoritos online com qualidade. Naruto, One Piece, Dragon Ball e muito mais.">
+  <meta property="og:image" content="https://seusite.com/img/capa.jpg"> <!-- imagem de pré-visualização -->
+  <meta property="og:url" content="https://seusite.com">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Aurio Anime - Assista Animes Online">
+  <meta name="twitter:description" content="O melhor site para assistir animes grátis, onde e quando quiser.">
+  <meta name="twitter:image" content="https://seusite.com/img/capa.jpg">
+
+  <!-- Favicon (ícone do site na aba do navegador) -->
+  <link rel="icon" href="img/ChatGPT Image 25_08_2025, 17_39_01 (2).png" type="image/png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .btn-crimson { background:#DC143C; color:#fff; transition:.3s; }
+    .btn-crimson:hover { background:#b01030; }
+    .btn-small { font-size:.85rem; padding:6px 12px; }
+  </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-6 text-center">
+    <div class="flex justify-between">
+      <h2 class="text-xl font-bold text-[#DC143C]">Perfil</h2>
+      <button id="logoutBtn" class="px-3 py-1 rounded-lg border text-sm">Sair</button>
+    </div>
+
+    <div class="flex justify-center mb-4 mt-2">
+      <img id="perfilAvatar" src="C:\Users\us\Desktop\progecto de site final aurio anime\img\esmael.jpg" alt="Avatar"
+           class="w-28 h-28 rounded-full object-cover border-4 border-gray-200 shadow-md">
+    </div>
+
+    <h3 id="perfilNome" class="text-xl font-bold"></h3>
+    <p id="perfilEmail" class="text-gray-600 text-sm"></p>
+    <p id="perfilIdade" class="text-gray-600 text-sm"></p>
+    <p id="perfilNascimento" class="text-gray-600 text-sm mb-4"></p>
+    <p id="perfilPais" class="text-gray-600 text-sm mb-2"></p>
+
+    <!-- Seguidores -->
+    <div class="flex items-center justify-center gap-3 mb-4">
+      <p class="text-gray-800 font-semibold">
+        👥 <span id="numSeguidores">0</span> seguidores
+      </p>
+      <button id="btnSeguir" class="btn-crimson btn-small rounded-lg">Seguir</button>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <button id="goChatBtn"
+              class="btn-crimson rounded-lg px-4 py-2 flex items-center justify-center gap-2">
+        <i data-lucide="message-circle"></i> Ir para o chat
+      </button>
+    </div>
+  </div>
+
+<script>
+  // util: formata 1200 -> 1.2k, 1500000 -> 1.5M
+  function abreviar(n){
+    const abs = Math.abs(n);
+    if (abs >= 1_000_000_000) return (n/1_000_000_000).toFixed(n%1_000_000_000 ? 1:0)+'B';
+    if (abs >= 1_000_000)     return (n/1_000_000).toFixed(n%1_000_000 ? 1:0)+'M';
+    if (abs >= 1_000)         return (n/1_000).toFixed(n%1_000 ? 1:0)+'k';
+    return String(n);
+  }
+
+  const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+  const usuarioAtualId = localStorage.getItem('usuarioAtual');
+
+  // se não estiver logado, manda pra Login
+  if (!usuarioAtualId) {
+    window.location.href = 'Login.html';
+  }
+
+  let usuarioAtual = usuarios.find(u => String(u.id) === String(usuarioAtualId));
+
+  // se não achar, volta pro login
+  if (!usuarioAtual) {
+    window.location.href = 'Login.html';
+  }
+
+  // dados mínimos para a conta padrão
+  if (!usuarioAtual.nome) usuarioAtual.nome = "Administrador";
+  if (!usuarioAtual.sobrenome) usuarioAtual.sobrenome = "";
+  if (!usuarioAtual.foto) usuarioAtual.foto = "https://via.placeholder.com/120";
+  if (!Array.isArray(usuarioAtual.seguidores)) usuarioAtual.seguidores = [];
+
+  // popula perfil
+  document.getElementById('perfilNome').textContent = `${usuarioAtual.nome} ${usuarioAtual.sobrenome}`.trim();
+  document.getElementById('perfilEmail').textContent = usuarioAtual.email || '';
+  document.getElementById('perfilIdade').textContent = usuarioAtual.idade ? usuarioAtual.idade + ' anos' : '';
+  document.getElementById('perfilNascimento').textContent = usuarioAtual.nascimento || '';
+  document.getElementById('perfilPais').textContent = usuarioAtual.pais ? 'País: ' + usuarioAtual.pais : '';
+  document.getElementById('perfilAvatar').src = usuarioAtual.foto;
+
+  // seguidores
+  const numSpan = document.getElementById('numSeguidores');
+  const renderSeguidores = () => { numSpan.textContent = abreviar(usuarioAtual.seguidores.length); };
+  renderSeguidores();
+
+  const btnSeguir = document.getElementById('btnSeguir');
+  // como sempre mostra o próprio perfil, botão não faz sentido
+  btnSeguir.style.display = 'none';
+
+  // botão de chat
+  document.getElementById('goChatBtn').onclick = () => {
+    window.location.href = 'grupo.html';
+  };
+
+  // logout
+  document.getElementById('logoutBtn').onclick = () => {
+    localStorage.removeItem('usuarioAtual');
+    window.location.href = 'Login.html';
+  };
+
+  lucide.createIcons();
+</script>
+
+</body>
+</html>

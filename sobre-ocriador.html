@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sobre o Criador - AurioAnime</title>
+  <link rel="stylesheet" href="style.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      background: #f1f1f1;
+      color: #1d3557;
+    }
+    header {
+      background: linear-gradient(135deg, #e63946 0%, #f1faee 100%);
+      padding: 1rem 2rem;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      margin: 0;
+      font-weight: 900;
+      color: #1d3557;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+      padding: 0;
+      margin: 0.5rem 0 0;
+    }
+    nav ul li a {
+      text-decoration: none;
+      color: #1d3557;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    nav ul li a:hover {
+      color: #e63946;
+    }
+
+    .about-creator {
+      background: linear-gradient(135deg, #e63946 0%, #f1faee 100%);
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: 2rem auto 4rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(230, 57, 70, 0.3);
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+    }
+    .about-image {
+      flex: 1 1 300px;
+      max-width: 350px;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(230, 57, 70, 0.5);
+      background: white;
+    }
+    .about-image img {
+      width: 100%;
+      display: block;
+    }
+    .about-text {
+      flex: 2 1 400px;
+      color: #1d3557;
+    }
+    .about-text h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 900;
+    }
+    .about-text p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+    footer {
+      background: #1d3557;
+      color: #f1faee;
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    /* Responsivo */
+    @media (max-width: 768px) {
+      .about-creator {
+        flex-direction: column;
+        text-align: center;
+      }
+      .about-text {
+        flex: unset;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <h1>Aurio<span>A</span>nime</h1>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="animes.html">Animes</a></li>
+        <li><a href="filme.html">Filmes</a></li>
+        <li><a href="login.html">Login</a></li>
+        <li><a href="sobre.html" style="color:#e63946; font-weight:700;">Sobre</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="about-creator">
+    <div class="about-image">
+      <img src="https://i.imgur.com/7YbE4Tf.jpg" alt="Foto do Criador" />
+    </div>
+    <div class="about-text">
+      <h2>Sobre o Criador</h2>
+      <p>
+        Olá! Eu sou o Aurio, o criador deste portal de animes, apaixonado por cultura pop, design
+        moderno e claro, muito fã de animes. Criei este site para reunir o melhor conteúdo para você
+        assistir online, com uma interface simples, estilosa e funcional.
+      </p>
+      <p>
+        Meu objetivo é entregar uma experiência visual incrível, alinhada com as cores vibrantes e o
+        estilo único que você já conhece do AurioAnime.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 AurioAnime. Todos os direitos reservados.
+  </footer>
+
+</body>
+</html>

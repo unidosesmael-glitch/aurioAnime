@@ -1,0 +1,124 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+section {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 300px;
+    margin-bottom: 20px;
+}
+
+/* Cadastro */
+.cadastro-section h2 {
+    text-align: center;
+    color: #DC143C;
+}
+
+.cadastro-section form {
+    display: flex;
+    flex-direction: column;
+}
+
+.cadastro-section label {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.cadastro-section input {
+    margin-top: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.cadastro-section button {
+    background-color: #DC143C;
+    color: white;
+    padding: 12px;
+    border: none;
+    margin-top: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cadastro-section button:hover {
+    background-color: #b81b32;
+}
+
+.perfil {
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+}
+
+.profile-card {
+  background: #f8f8f8;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.profile-avatar {
+  background-color: #008080;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  color: white;
+  font-size: 40px;
+  text-align: center;
+  line-height: 100px;
+  margin-bottom: 20px;
+}
+
+.profile-info {
+  text-align: center;
+}
+
+.profile-info button {
+  background-color: #DC143C;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+  border: none;
+}
+
+.profile-info button:hover {
+  background-color: #B22222;
+}
+
+#profileDetails {
+  margin-top: 20px;
+  background-color: #f3f3f3;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+button {
+  margin-top: 10px;
+  background-color: #008080;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+

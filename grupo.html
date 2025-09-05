@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Título do site (aparece na aba do navegador e no Google) -->
+  <title>Aurio Anime - Assista Animes Online Grátis</title>
+
+  <!-- Descrição (importante para SEO e Google) -->
+  <meta name="description" content="Aurio Anime é o melhor portal para assistir animes online grátis. Explore os títulos mais populares como Naruto, One Piece, Dragon Ball, Demon Slayer e muito mais.">
+
+  <!-- Palavras-chave (SEO) -->
+  <meta name="keywords" content="anime, assistir anime online, animes dublados, animes legendados, Naruto, One Piece, Dragon Ball, Demon Slayer, Jujutsu Kaisen, Attack on Titan">
+
+  <!-- Autor -->
+  <meta name="author" content="Esmael da Silva Jonas">
+
+  <!-- Open Graph (Facebook, WhatsApp e redes sociais) -->
+  <meta property="og:title" content="Aurio Anime - Assista Animes Online">
+  <meta property="og:description" content="Assista seus animes favoritos online com qualidade. Naruto, One Piece, Dragon Ball e muito mais.">
+  <meta property="og:image" content="https://seusite.com/img/capa.jpg"> <!-- imagem de pré-visualização -->
+  <meta property="og:url" content="https://seusite.com">
+  <meta property="og:type" content="website">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Aurio Anime - Assista Animes Online">
+  <meta name="twitter:description" content="O melhor site para assistir animes grátis, onde e quando quiser.">
+  <meta name="twitter:image" content="https://seusite.com/img/capa.jpg">
+
+  <!-- Favicon (ícone do site na aba do navegador) -->
+  <link rel="icon" href="img/ChatGPT Image 25_08_2025, 17_39_01 (2).png" type="image/png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .chat-box { max-height: 500px; overflow-y: auto; }
+    .avatar { width: 40px; height: 40px; border-radius:50%; object-fit:cover; cursor:pointer; }
+    .btn-crimson { background:#DC143C; color:#fff; transition:.3s; }
+    .btn-crimson:hover { background:#b01030; }
+    .btn-outline-crimson { border:2px solid #DC143C; color:#DC143C; transition:.3s; }
+    .btn-outline-crimson:hover { background:#DC143C; color:#fff; }
+  </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+  <div class="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-6">
+    <!-- Cabeçalho -->
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-2xl font-bold flex items-center gap-2 text-[#DC143C]">
+        <i data-lucide="message-square"></i> Chat do Grupo
+      </h2>
+      <button id="btnConfig" class="p-2 btn-crimson rounded-lg shadow">
+        <i data-lucide="settings"></i>
+      </button>
+    </div>
+
+    <!-- Configurações -->
+    <div id="configPanel" class="hidden bg-gray-50 p-4 rounded-lg mb-4 border border-gray-200">
+      <div id="adminOnly">
+        <label class="flex items-center gap-2 mb-2">
+          <input type="checkbox" id="isAdminToggle" class="w-4 h-4 accent-[#DC143C]"> Ativar modo administrador
+        </label>
+      </div>
+      <button id="toggleTheme" class="flex items-center gap-2 px-3 py-1 btn-outline-crimson rounded-lg mb-2 w-full justify-center">
+        <i data-lucide="sun"></i> Trocar Tema
+      </button>
+      <p class="mb-2 flex items-center gap-2 text-gray-700">
+        <i data-lucide="users"></i> Usuários no grupo: <span id="userCount">0</span>
+      </p>
+      <button id="leaveGroup" class="flex items-center gap-2 px-3 py-1 btn-crimson rounded-lg w-full justify-center">
+        <i data-lucide="log-out"></i> Sair do Grupo
+      </button>
+    </div>
+
+    <!-- Chat -->
+    <div id="chat" class="chat-box border border-gray-200 rounded-lg p-3 mb-3 flex flex-col space-y-3 bg-gray-50"></div>
+
+    <!-- Pesquisa -->
+    <div class="flex gap-2 mb-3">
+      <input id="searchBar" type="text" placeholder="Pesquisar usuário..."
+             class="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#DC143C]">
+      <button id="searchBtn" class="flex items-center gap-2 px-3 py-2 btn-outline-crimson rounded-lg">
+        <i data-lucide="search"></i> Pesquisar
+      </button>
+    </div>
+
+    <!-- Campo de mensagem -->
+    <div class="flex gap-2">
+      <input id="msgInput" type="text" placeholder="Digite sua mensagem..."
+             class="flex-1 border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#DC143C]">
+      <button id="sendBtn" class="flex items-center gap-2 px-4 py-2 btn-crimson rounded-lg">
+        <i data-lucide="send"></i> Enviar
+      </button>
+    </div>
+  </div>
+
+<script>
+  const chat = document.getElementById('chat');
+  const sendBtn = document.getElementById('sendBtn');
+  const msgInput = document.getElementById('msgInput');
+  const searchBtn = document.getElementById('searchBtn');
+  const searchBar = document.getElementById('searchBar');
+  const userCount = document.getElementById('userCount');
+  const btnConfig = document.getElementById('btnConfig');
+  const configPanel = document.getElementById('configPanel');
+  const toggleTheme = document.getElementById('toggleTheme');
+  const leaveGroup = document.getElementById('leaveGroup');
+  const isAdminToggle = document.getElementById('isAdminToggle');
+  const adminOnly = document.getElementById('adminOnly');
+
+  const ADMIN_PASSWORD = "1";
+
+  // 🔒 Verifica login
+  const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+  const usuarioAtualId = localStorage.getItem('usuarioAtual');
+  if (!usuarioAtualId) {
+    alert('⚠️ Você precisa criar uma conta ou fazer login para usar o chat.');
+    window.location.href = 'Login.html';
+  }
+  let usuario = usuarios.find(u => String(u.id) === String(usuarioAtualId));
+  if (!usuario) {
+    alert('⚠️ Sessão inválida. Entre novamente.');
+    localStorage.removeItem('usuarioAtual');
+    window.location.href = 'Login.html';
+  }
+
+  // garante dados mínimos
+  if (!usuario.nome) usuario.nome = "Administrador";
+  if (!usuario.foto) usuario.foto = "https://via.placeholder.com/40";
+
+  // controla exibição de admin
+  let isAdmin = false;
+  if (usuario.email === "admin@teste.com") {
+    // conta padrão já é admin automaticamente
+    isAdmin = true;
+    adminOnly.style.display = 'block';
+  } else {
+    adminOnly.style.display = 'none';
+  }
+
+  let messages = JSON.parse(localStorage.getItem('messages')) || [];
+  const botAvatar = "https://i.imgur.com/IA9Yu8n.png";
+
+  function abrirPerfil(userId){
+    localStorage.setItem('perfilSelecionado', userId);
+    window.location.href = 'Perfil.html';
+  }
+
+  function updateUserCount(){
+    userCount.textContent = usuarios.length;
+  }
+
+  function renderMessages(){
+    chat.innerHTML = '';
+    messages.forEach((msg, index) => {
+      const mine = msg.senderId === usuario.id;
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `flex items-start max-w-[75%] ${mine ? 'self-end' : 'self-start'} space-x-2`;
+
+      msgDiv.innerHTML = `
+        <img src="${msg.avatar || 'https://via.placeholder.com/40'}"
+             alt="Avatar" class="avatar border-2 border-[#DC143C]"
+             onclick="abrirPerfil('${msg.senderId||''}')">
+        <div class="${msg.isBot ? 'bg-[#FFD700] text-black' : 'bg-[#DC143C] text-white'} px-3 py-2 rounded-lg shadow">
+          <div class="text-sm font-semibold">${msg.sender}</div>
+          <div>${msg.text}</div>
+          <div class="text-xs opacity-80 mt-1">${msg.time}</div>
+        </div>
+      `;
+
+      msgDiv.addEventListener('click', (e) => {
+        if (isAdmin && !msg.isBot && e.target.tagName !== 'IMG') {
+          if (confirm('Apagar esta mensagem?')) {
+            messages.splice(index, 1);
+            localStorage.setItem('messages', JSON.stringify(messages));
+            renderMessages();
+          }
+        }
+      });
+
+      chat.appendChild(msgDiv);
+    });
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  function addMessage(text, sender, avatar='', isBot=false, senderId=null){
+    const now = new Date();
+    const time = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')} - ${now.getFullYear()}`;
+    const newMsg = { text, sender, avatar, isBot, time, senderId };
+    messages.push(newMsg);
+    localStorage.setItem('messages', JSON.stringify(messages));
+    renderMessages();
+  }
+
+  // primeira carga
+  if (messages.length === 0) {
+    addMessage('Olá! Seja bem-vindo ao grupo.', 'Bot', botAvatar, true, 'bot');
+  } else {
+    renderMessages();
+  }
+
+  sendBtn.onclick = () => {
+    const txt = msgInput.value.trim();
+    if (!txt) return;
+    addMessage(txt, usuario.nome, usuario.foto, false, usuario.id);
+    if (txt.toLowerCase().includes('@bot')) {
+      setTimeout(() => addMessage('🤖 Como posso ajudar?', 'Bot', botAvatar, true, 'bot'), 400);
+    }
+    msgInput.value = '';
+  };
+
+  searchBtn.onclick = () => {
+    const term = searchBar.value.trim().toLowerCase();
+    const found = usuarios.find(u => (u.nome || '').toLowerCase() === term);
+    alert(found ? `Usuário encontrado: ${found.nome}` : 'Usuário não foi encontrado.');
+  };
+
+  btnConfig.onclick = () => configPanel.classList.toggle('hidden');
+  toggleTheme.onclick = () => document.body.classList.toggle('bg-gray-900');
+  leaveGroup.onclick = () => {
+    localStorage.removeItem('usuarioAtual');
+    window.location.href = 'Login.html';
+  };
+
+  isAdminToggle.onchange = () => {
+    if (isAdminToggle.checked) {
+      const s = prompt('Digite a senha de administrador:');
+      if (s === ADMIN_PASSWORD) {
+        isAdmin = true;
+        alert('✅ Modo administrador ativado!');
+      } else {
+        alert('❌ Senha incorreta.');
+        isAdminToggle.checked = false;
+      }
+    } else {
+      isAdmin = false;
+    }
+  };
+
+  window.onload = () => {
+    updateUserCount();
+    lucide.createIcons();
+  };
+</script>
+
+</body>
+</html>
